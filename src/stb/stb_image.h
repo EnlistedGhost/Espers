@@ -1767,7 +1767,7 @@ static stbi__uint16 *stbi__convert_format16(stbi__uint16 *data, int img_n, int r
    if (req_comp == img_n) return data;
    STBI_ASSERT(req_comp >= 1 && req_comp <= 4);
 
-   good = (stbi__uint16 *) stbi__malloc(req_comp * x * y * 2);
+   good = (stbi__uint16 *) stbi__malloc((size_t) req_comp * x * y * sizeof(stbi__uint16));
    if (good == NULL) {
       STBI_FREE(data);
       return (stbi__uint16 *) stbi__errpuc("outofmem", "Out of memory");
@@ -6031,7 +6031,7 @@ static void *stbi__psd_load(stbi__context *s, int *x, int *y, int *comp, int req
       out = (stbi_uc *) stbi__malloc_mad3(8, w, h, 0);
       ri->bits_per_channel = 16;
    } else
-      out = (stbi_uc *) stbi__malloc(4 * w*h);
+      out = (stbi_uc *) stbi__malloc_mad3(4, w, h, 0);
 
    if (!out) return stbi__errpuc("outofmem", "Out of memory");
    pixelCount = w*h;
